@@ -15,20 +15,29 @@
             <h1 class="grid justify-items-center font-[Poppins] text-4xl">Data Table</h1>
             <div class="px-6 py-4">
                 <table class="w-full text-sm text-left rtl:text-right text-zinc-950 dark:text-zinc-950">
-                    <thead class="text-xs text-neutral-50 uppercase  bg-gray-50 dark:bg-neutral-50 dark:text-zinc-950">
-                        <tr class="text-center">
+                    <thead class="text-xs text-neutral-50 uppercase bg-slate-950 dark:bg-neutral-50 dark:text-zinc-950">
+                        <tr class="">
                             <th class="px-6 py-3">No</th>
                             <th class="px-6 py-3">Nama</th>
                             <th class="px-6 py-3">HP</th>
+                            <th class="px-6 py-3">Image</th>
                             <th class="px-6 py-3">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($index as $row)
-                            <tr class="bg-white border-b dark:bg-neutral-300 dark:border-red-700 text-center">
+                            <tr class="bg-white border-b dark:bg-neutral-300 dark:border-red-700">
                                 <td class="px-6 py-3">{{ $loop->iteration }}</td>
                                 <td class="px-6 py-3">{{ $row->nama }}</td>
                                 <td class="px-6 py-3">{{ $row->hp }}</td>
+                                <td class="px-6 py-3">
+                                    @if ($row->image)
+                                        <img src="{{ asset('storage/' . $row->image) }}" alt="Gambar Anggota"
+                                            class="w-16 h-16 object-cover">
+                                    @else
+                                        <p>Gambar tidak tersedia</p>
+                                    @endif
+                                </td>
                                 <td class="px-6 py-3">
                                     <a href="{{ route('anggota.edit', $row->id) }}">
                                         <button type="button"

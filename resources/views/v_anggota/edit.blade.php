@@ -10,7 +10,8 @@
 </head>
 
 <body>
-    <form action="{{ route('anggota.update', $edit->id) }}" method="post" class="max-w-sm mx-auto">
+    <form action="{{ route('anggota.update', $edit->id) }}" method="post" class="max-w-sm mx-auto"
+        enctype="multipart/form-data"> <!-- Menambahkan enctype -->
         @method('put')
         @csrf
         <div class="grid justify-items-center pt-6">
@@ -22,7 +23,7 @@
                         <label for=""
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Nama</label>
                         <input type="text" name="nama" id="" value="{{ old('nama', $edit->nama) }}"
-                            placeholder="Masukkan Nama Lenkap"
+                            placeholder="Masukkan Nama Lengkap"
                             class="block w-full rounded-md border-0 pl-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             @error('nama') is-invalid @enderror">
                         @error('nama')
@@ -30,18 +31,43 @@
                                 {{ $message }}
                             </span>
                         @enderror
+
                         <label for=""
-                            class="block pt-6 mb-2 text-sm font-medium text-gray-900 dark:text-black">Hp</label>
+                            class="block pt-6 mb-2 text-sm font-medium text-gray-900 dark:text-black">HP</label>
                         <input type="text" name="hp" id="" value="{{ old('hp', $edit->hp) }}"
-                            placeholder="Masukkan Nomor Hp"
+                            placeholder="Masukkan Nomor HP"
                             class="block w-full rounded-md border-0 pl-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            @error('nama') is-invalid @enderror">
+                            @error('hp') is-invalid @enderror">
                         @error('hp')
                             <span class="invalid-feedback alert-danger" role="alert">
                                 {{ $message }}
                             </span>
                         @enderror
+
+                        <!-- Upload image baru -->
+                        <label for="image"
+                            class="block pt-6 mb-2 text-sm font-medium text-gray-900 dark:text-black">Upload
+                            image</label>
+                        <input type="file"
+                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+                            name="image" id="image" @error('image') is-invalid @enderror>
+                        @error('image')
+                            <span class="invalid-feedback alert-danger" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
+
+                        <!-- Menampilkan image yang sudah diupload sebelumnya jika ada -->
+                        @if ($edit->image)
+                            <div class="pt-6">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">image Saat
+                                    Ini</label>
+                                <img src="{{ asset('storage/' . $edit->image) }}" alt="image Anggota"
+                                    class="w-32 h-32 object-cover">
+                            </div>
+                        @endif
                     </div>
+
                     <button type="submit"
                         class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Perbaharui</button>
                     <a href="{{ route('anggota.index') }}">
@@ -55,3 +81,5 @@
 </body>
 
 </html>
+
+

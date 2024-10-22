@@ -36,8 +36,15 @@ class AnggotaController extends Controller
     {
         $validateData = $request->validate([
             'nama' => 'required|max:255',
-            'hp' => 'required|min:10|max:13'
+            'hp' => 'required|min:10|max:13',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // validasi gambar
         ]);
+
+        if ($request->file('image')) {
+            $imagePath = $request->file('image')->store('gambar_anggota', 'public');
+            $validateData['image'] = $imagePath;
+        }
+
         Anggota::create($validateData);
         return redirect('/anggota');
     }
@@ -70,8 +77,16 @@ class AnggotaController extends Controller
         $rules = [
             'nama' => 'required|max:100',
             'hp' => 'required|min:10|max:13',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // validasi gambar
         ];
+
         $validateData = $request->validate($rules);
+
+        if ($request->file('image')) {
+            $imagePath = $request->file('image')->store('gambar_anggota', 'public');
+            $validateData['image'] = $imagePath;
+        }
+
         Anggota::where('id', $id)->update($validateData);
         return redirect('/anggota');
     }
@@ -83,6 +98,6 @@ class AnggotaController extends Controller
     {
         $anggota = Anggota::findOrFail($id);
         $anggota->delete();
-        return redirect('/anggota');  
+        return redirect('/anggota');
     }
 }
