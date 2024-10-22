@@ -9,7 +9,7 @@
 <hr>
 <br>
 <p>Update Page</p><hr>
-<p align="Center"><img src="Update-Page"></p>
+<p align="Center"><img src="Update-Page.png"></p>
 <hr>
 
 
